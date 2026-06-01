@@ -10,6 +10,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// ── Health check (required) — exempt from auth so hosting/uptime checks pass ─
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', version: '1.0.0' });
+});
+
 // ── Security: reject requests not coming through RapidAPI ──────────────────
 app.use((req, res, next) => {
   const secret = req.headers['x-rapidapi-proxy-secret'];
@@ -32,10 +37,8 @@ function setCache(key, data) {
   cache.set(key, { data, ts: Date.now() });
 }
 
-// ── Health check (required by RapidAPI) ───────────────────────────────────
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: '1.0.0' });
-});
+// ── Health check (required) — exempt from auth so hosting/uptime checks pass ─
+// (defined above, before the security middleware)
 
 // ── YOUR ENDPOINTS HERE ────────────────────────────────────────────────────
 
@@ -75,3 +78,5 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => console.log(`API running on port ${PORT}`));
+
+module.exports = { app };

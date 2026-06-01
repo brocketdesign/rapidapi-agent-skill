@@ -27,6 +27,10 @@ curl "http://localhost:3000/health"
 curl "http://localhost:3000/your-endpoint?param=value"
 ```
 
+> Tip: the template ships a `smoke-test.js`. Add `module.exports = { app };` to the end of
+> `index.js`, add a check per endpoint, then run `npm run smoke-test` to verify everything
+> (health, success, validation errors, 404) in one command before you deploy.
+
 ### Step 4 — Push to GitHub
 
 ```bash
@@ -142,9 +146,11 @@ function setCache(key, data) {
 
 ## Checklist Before Moving to Publish
 
-- [ ] `/health` returns 200 OK
+- [ ] `npm install` succeeds (template `package.json` is valid JSON)
+- [ ] `/health` returns 200 OK (and is reachable without the proxy secret)
+- [ ] `npm run smoke-test` passes
 - [ ] All endpoints return JSON
-- [ ] Proxy secret validation is active
+- [ ] Proxy secret validation is active (403 without it in production)
 - [ ] Env vars set in hosting dashboard
 - [ ] Live URL tested with `curl`
 - [ ] Response time < 2 seconds

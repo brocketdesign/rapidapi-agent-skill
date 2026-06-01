@@ -45,11 +45,22 @@ Fill in [`setup/credentials.md`](./setup/credentials.md) with your keys before t
 ├── templates/
 │   ├── api-readme.md              # Per-API documentation template
 │   ├── openapi-spec.yaml          # OpenAPI 3.0 spec template
-│   ├── express-api/index.js       # Node.js starter
+│   ├── express-api/               # Node.js starter (index.js, package.json,
+│   │                              #   .env.example, smoke-test.js, .gitignore)
 │   └── fastapi/main.py            # Python starter
 └── published/
     └── README.md                  # Log of all published APIs
 ```
+
+---
+
+## Worked Example
+
+A complete API built and verified from this skill:
+**[readability-score-api](https://github.com/brocketdesign/readability-score-api)** —
+text readability metrics (Flesch Reading Ease, Flesch–Kincaid grade, Gunning Fog, reading
+time). It was scaffolded from `templates/express-api/`, passes `npm run smoke-test`, and is
+logged in [`published/`](./published/).
 
 ---
 
