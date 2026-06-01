@@ -153,7 +153,7 @@ async def verify_rapidapi(x_rapidapi_proxy_secret: str = Header(None)):
         raise HTTPException(status_code=403, detail="Access denied")
 ```
 
-Find your proxy secret: RapidAPI Provider Dashboard → API → Settings → Security → Proxy Secret.
+Find your proxy secret: RapidAPI Studio → [Your API] → Hub Listing → Gateway tab → Firewall Settings → Copy.
 
 ---
 

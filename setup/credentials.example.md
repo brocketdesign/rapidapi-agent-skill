@@ -5,15 +5,41 @@
 
 ---
 
-## RapidAPI Provider
+## RapidAPI — Consumer API Key (X-RapidAPI-Key)
+
+This is the key that goes into every API call header.
 
 | Field | Value |
 |-------|-------|
 | Account Email | `YOUR_EMAIL` |
-| Provider Dashboard | https://rapidapi.com/provider |
-| Provider API Key | `YOUR_RAPIDAPI_KEY` |
+| X-RapidAPI-Key | `YOUR_RAPIDAPI_KEY` |
 
-*Find your key: RapidAPI → Account → Security → Application Keys*
+**How to find it (exact steps):**
+1. Go to https://rapidapi.com/developer/apps
+2. Click on your app (a default app is created when you sign up)
+3. Click the **Authorization** tab
+4. Your key is listed there — click to copy
+
+> You are NOT looking in the Console → Security page (that is for SSL certificates).
+> Go to **Developer Dashboard → Apps → Authorization**, not the Console.
+
+---
+
+## RapidAPI — Provider Proxy Secret (per API)
+
+This is different from the key above. Each API you publish gets its own proxy secret.
+Use it in your backend to verify requests really come from RapidAPI.
+
+| Field | Value |
+|-------|-------|
+| Proxy Secret | *(found per API — see below)* |
+
+**How to find it (exact steps):**
+1. Go to https://rapidapi.com/studio (or click **My APIs** in top nav)
+2. Open the API you published
+3. Click **Hub Listing** → **Gateway** tab
+4. Under **Firewall Settings**, click **Copy** next to `X-RapidAPI-Proxy-Secret`
+5. Paste it into your hosting provider's env vars as `RAPIDAPI_PROXY_SECRET`
 
 ---
 

@@ -25,7 +25,8 @@
 1. Go to **Configuration** tab
 2. Set **Base URL** → your deployed HTTPS URL (e.g., `https://my-api.onrender.com`)
 3. Enable **Proxy Secret**:
-   - Copy the generated secret
+   - Go to **Hub Listing → Gateway tab → Firewall Settings**
+   - Click **Copy** next to `X-RapidAPI-Proxy-Secret`
    - Paste it into your hosting dashboard as env var `RAPIDAPI_PROXY_SECRET`
    - Redeploy your service so it picks up the new env var
 4. Test: click **"Test Endpoint"** — should return 200
