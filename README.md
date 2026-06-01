@@ -1,6 +1,6 @@
 # RapidAPI Monetized Services
 
-A collection of APIs published on [RapidAPI](https://rapidapi.com) for monetizing online services.
+A collection of APIs published on [RapidAPI](https://rapidapi.com).
 
 ## Structure
 
