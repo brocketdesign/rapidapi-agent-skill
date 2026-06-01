@@ -2,38 +2,54 @@ openapi: 3.0.3
 info:
   title: My API Name
   description: |
-    Short description of what this API does.
-    Replace this with your actual API description.
+    Replace with your API description. What problem does it solve?
+    Who is it for? Keep it to 2–3 sentences.
   version: 1.0.0
   contact:
     name: brocketdesign
     url: https://rapidapi.com/brocketdesign
 
 servers:
-  - url: https://your-api.example.com
-    description: Production server
+  - url: https://your-api.onrender.com
+    description: Production
 
 security:
   - RapidAPIKey: []
 
 paths:
-  /search:
+  /health:
     get:
-      summary: Search endpoint
-      description: Returns results matching the query.
-      operationId: search
+      summary: Health check
+      operationId: health
+      responses:
+        "200":
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  /endpoint:
+    get:
+      summary: Main endpoint
+      description: Replace this with your endpoint description.
+      operationId: endpoint
       parameters:
         - name: q
           in: query
           required: true
-          description: Search query string
+          description: Search / input query
           schema:
             type: string
             example: "hello world"
         - name: limit
           in: query
           required: false
-          description: Maximum number of results to return
+          description: Maximum number of results (1–100)
           schema:
             type: integer
             default: 10
@@ -45,9 +61,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchResponse"
+                $ref: "#/components/schemas/SuccessResponse"
         "400":
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden — invalid or missing API key
           content:
             application/json:
               schema:
@@ -73,26 +95,24 @@ components:
       name: X-RapidAPI-Key
 
   schemas:
-    SearchResponse:
+    SuccessResponse:
       type: object
       properties:
         status:
           type: string
           example: success
         data:
-          type: array
-          items:
-            type: object
-        count:
-          type: integer
-          example: 5
+          type: object
+        cached:
+          type: boolean
+          example: false
 
     Error:
       type: object
       properties:
-        error:
+        status:
           type: string
-          example: "Invalid request"
+          example: error
         message:
           type: string
           example: "The 'q' parameter is required"

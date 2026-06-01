@@ -1,0 +1,8 @@
+# .gitignore for API projects
+.env
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.venv/
+.DS_Store

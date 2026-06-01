@@ -1,30 +1,70 @@
-# RapidAPI Monetized Services
+# RapidAPI Agent Skill
 
-A collection of APIs published on [RapidAPI](https://rapidapi.com).
+An AI Agent skill that **finds, builds, deploys, and publishes a new API on [RapidAPI](https://rapidapi.com) every day** — creating a recurring passive income stream.
 
-## Structure
+## How to Use This Skill
+
+Share this repository URL with your AI Agent and say:
+
+> "Follow the skill at https://github.com/brocketdesign/rapidapi-agent-skill and publish a new API on RapidAPI today."
+
+The agent will:
+1. Read [`SKILL.md`](./SKILL.md) — the complete knowledge base
+2. Pick a profitable API idea
+3. Build & deploy the API to a free host
+4. Publish it on RapidAPI with pricing plans
+5. Log the result in [`published/`](./published/)
+
+---
+
+## Prerequisites (one-time setup)
+
+| Account | URL | Cost |
+|---------|-----|------|
+| RapidAPI Provider | https://rapidapi.com/provider | Free |
+| GitHub | https://github.com | Free |
+| Render / Railway / Heroku | (see `setup/credentials.md`) | Free tier |
+| OpenAI / Anthropic (optional) | For AI-powered APIs | Pay per use |
+
+Fill in [`setup/credentials.md`](./setup/credentials.md) with your keys before the agent starts.
+
+---
+
+## Repository Structure
 
 ```
-/
-├── README.md                  # This file
-├── RAPIDAPI_KEYS.md           # 🔑 Keys & credentials (fill this in)
-├── docs/
-│   ├── publish-guide.md       # Step-by-step guide to publish a new API
-│   └── api-template.md        # Template for documenting a new API
-└── apis/
-    └── _example/              # Example API scaffold
-        ├── spec.yaml          # OpenAPI 3.0 spec
-        └── README.md          # API-specific notes
+├── SKILL.md                        # 🧠 Master knowledge file (start here)
+├── setup/
+│   └── credentials.md             # Keys & environment variables template
+├── workflows/
+│   ├── daily-workflow.md          # Step-by-step daily routine
+│   ├── find-api-ideas.md          # How to find profitable niches
+│   ├── build-and-deploy.md        # Build & deploy in < 1 hour
+│   ├── publish-to-rapidapi.md     # RapidAPI publishing guide
+│   └── pricing-strategy.md        # Pricing plans for max revenue
+├── templates/
+│   ├── api-readme.md              # Per-API documentation template
+│   ├── openapi-spec.yaml          # OpenAPI 3.0 spec template
+│   ├── express-api/index.js       # Node.js starter
+│   └── fastapi/main.py            # Python starter
+└── published/
+    └── README.md                  # Log of all published APIs
 ```
 
-## Quick Start
+---
 
-1. Fill in `RAPIDAPI_KEYS.md` with your credentials.
-2. Follow `docs/publish-guide.md` to publish a new API.
-3. Copy `apis/_example/` as a scaffold for each new API.
+## Income Potential
 
-## Published APIs
+| Scenario | APIs Live | Avg Subscribers | Monthly Revenue |
+|----------|-----------|-----------------|-----------------|
+| Conservative | 10 | 5/API @ $9.99 | ~$500 |
+| Moderate | 30 | 10/API @ $9.99 | ~$3,000 |
+| Optimistic | 100 | 20/API @ $9.99 | ~$20,000 |
 
-| API Name | Category | Status | RapidAPI URL |
-|----------|----------|--------|--------------|
-| _(none yet)_ | — | — | — |
+> Revenue compounds as you publish more APIs. Each one is a new revenue stream.
+
+---
+
+## Contributing
+
+Pull requests welcome — especially new API ideas, templates, and workflow improvements.
