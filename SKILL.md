@@ -25,7 +25,7 @@ RapidAPI is the world's largest API marketplace. Developers subscribe to APIs to
 ### How You Earn
 - You set **pricing plans** (Free → Pro → Ultra)
 - Subscribers pay monthly
-- RapidAPI pays you via Stripe (monthly payout, ~80% revenue share)
+- RapidAPI pays you via **PayPal only** (monthly payout, 75% revenue share — RapidAPI keeps 25%)
 - One API with 10 Pro subscribers ($9.99/mo) = ~$80/mo passive income
 
 ### What Makes a Good API?

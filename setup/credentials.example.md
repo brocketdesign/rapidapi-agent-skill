@@ -99,15 +99,19 @@ EXTERNAL_API_KEY=               # Whatever upstream API your service wraps
 
 ---
 
-## Stripe (Payouts)
+## PayPal (Payouts — Required)
 
-RapidAPI pays via Stripe. Connect your Stripe account:
-1. RapidAPI Provider Dashboard → Billing
-2. Connect Stripe → verify bank account
-3. Payouts arrive monthly (net 30)
+RapidAPI pays providers via **PayPal only** (no Stripe, no bank transfer).
+
+**How to link your PayPal:**
+1. Log in to rapidapi.com
+2. Click your avatar (top right) → **Personal Payouts**
+3. Click **Link PayPal** → log in to your PayPal account
 
 | Field | Value |
 |-------|-------|
-| Stripe Account Email | `YOUR_EMAIL` |
-| Minimum payout threshold | $10 |
-| Payout schedule | Monthly |
+| PayPal Email | `YOUR_PAYPAL_EMAIL` |
+| Marketplace fee | 25% (RapidAPI keeps 25%, you receive 75%) |
+| Payout timing | First week of the month, ~30 days after billing |
+
+> ⚠️ If no PayPal is linked, RapidAPI cannot send you money even if you have subscribers.

@@ -44,14 +44,14 @@ Enable **"Pay Per Use"** overages on Pro/Ultra plans:
 
 ## Revenue Targets
 
-| APIs Published | Avg 5 Pro subs each | Monthly Revenue |
-|----------------|--------------------|-|
-| 5 | $9.99 × 5 × 5 | ~$250 |
-| 15 | $9.99 × 5 × 15 | ~$750 |
-| 30 | $9.99 × 5 × 30 | ~$1,500 |
-| 100 | $9.99 × 5 × 100 | ~$5,000 |
+| APIs Published | Avg 5 Pro subs each | Gross Revenue | Your 75% share |
+|----------------|--------------------|-|----------------|
+| 5 | $9.99 × 5 × 5 | ~$250 | ~$187 |
+| 15 | $9.99 × 5 × 15 | ~$750 | ~$562 |
+| 30 | $9.99 × 5 × 30 | ~$1,500 | ~$1,125 |
+| 100 | $9.99 × 5 × 100 | ~$5,000 | ~$3,750 |
 
-**Goal: Publish 1 API/day → 30 APIs/month → $750–$1,500/month within 90 days.**
+> RapidAPI takes a flat **25% marketplace fee**. Payouts via **PayPal** in the first week of the following month.
 
 ---
 
