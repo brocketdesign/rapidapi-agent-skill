@@ -1,0 +1,9 @@
+# .gitignore
+setup/credentials.md
+.env
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.venv/
+.DS_Store
