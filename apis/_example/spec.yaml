@@ -1,0 +1,98 @@
+openapi: 3.0.3
+info:
+  title: My API Name
+  description: |
+    Short description of what this API does.
+    Replace this with your actual API description.
+  version: 1.0.0
+  contact:
+    name: brocketdesign
+    url: https://rapidapi.com/brocketdesign
+
+servers:
+  - url: https://your-api.example.com
+    description: Production server
+
+security:
+  - RapidAPIKey: []
+
+paths:
+  /search:
+    get:
+      summary: Search endpoint
+      description: Returns results matching the query.
+      operationId: search
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Search query string
+          schema:
+            type: string
+            example: "hello world"
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of results to return
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "429":
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  securitySchemes:
+    RapidAPIKey:
+      type: apiKey
+      in: header
+      name: X-RapidAPI-Key
+
+  schemas:
+    SearchResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        data:
+          type: array
+          items:
+            type: object
+        count:
+          type: integer
+          example: 5
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Invalid request"
+        message:
+          type: string
+          example: "The 'q' parameter is required"
