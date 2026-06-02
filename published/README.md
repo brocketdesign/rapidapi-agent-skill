@@ -6,7 +6,7 @@ Log every API you publish here. Update status weekly.
 |----------|----------|-------|--------------|-----------|-------------|--------|
 | Readability Score API | Text & NLP | $9.99/mo | *(pending listing)* | 2026-06-01 | 0 | 🟡 Draft |
 
-> Backend repo: https://github.com/brocketdesign/readability-score-api — built & tested from this skill's express template (Flesch Reading Ease, Flesch–Kincaid grade, Gunning Fog, reading time). Deploy to Render, then create the RapidAPI listing and update the URL/status above.
+> Backend repo: https://github.com/brocketdesign/readability-score-api — built & tested from this skill's express template (Flesch Reading Ease, Flesch–Kincaid grade, Gunning Fog, reading time). Listing document: `rapidapi-listing.json` in the API repo. Deploy to Railway, then create the RapidAPI listing and update the URL/status above.
 
 ---
 

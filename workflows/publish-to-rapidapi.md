@@ -10,11 +10,14 @@
 ## Step 0 — Generate the Listing Document (Required)
 
 **Before touching the RapidAPI dashboard**, produce the listing document.
-Copy `templates/rapidapi-listing.json` to `published/<api-name>.json` and fill in every field:
+Copy `templates/rapidapi-listing.json` into **the API's own repo** as `rapidapi-listing.json` and fill in every field:
 
 ```bash
-cp templates/rapidapi-listing.json published/my-api-name.json
+cp /path/to/rapidapi-agent-skill/templates/rapidapi-listing.json /path/to/my-api/rapidapi-listing.json
 ```
+
+> The listing document lives in the API repo (not in this skill repo) so it travels with the code.
+> Add `rapidapi-listing.json` to the API repo's git history and commit it.
 
 The document must contain:
 
