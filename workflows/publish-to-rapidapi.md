@@ -37,11 +37,14 @@ The document must contain:
 | `pricing` | All 4 tiers (see `workflows/pricing-strategy.md`) |
 | `openapi` | Full OpenAPI 3.0 spec **in JSON** (not YAML) — one endpoint per path |
 
-> **Why JSON not YAML?** RapidAPI's import UI accepts both, but the listing document is a
-> single portable file that humans and agents can read, validate, and paste directly into
-> the RapidAPI dashboard without a conversion step.
+> **Why JSON not YAML?** RapidAPI's import UI accepts both, but JSON is easier for agents to generate and validate programmatically.
 
-**Output:** `published/<api-name>.json` committed to this repo. Hand this file to the user.
+**Output — two files committed to the API repo:**
+1. `rapidapi-listing.json` — full listing document (name, description, pricing, openapi spec embedded)
+2. `openapi.json` — the `openapi` field extracted as a standalone file, ready to upload directly to RapidAPI's import tool
+   ⚠️ RapidAPI's import expects a file whose top-level key is `"openapi"` — uploading the full listing doc will fail with `UNSUPPORTED_OAS_VERSION`
+
+Hand both files to the user.
 
 ---
 
@@ -76,12 +79,12 @@ Use the values from your `published/<api-name>.json` listing document:
 
 ## Step 3 — Define Endpoints
 
-### Option A — Import from listing document (fastest)
-1. Open your `published/<api-name>.json` listing document
-2. Extract the `openapi` field — this is a complete OpenAPI 3.0 JSON spec
-3. Save it as a standalone `.json` file (or paste directly)
-4. Go to **Endpoints** → **Import** → upload the JSON file
-5. Review each imported endpoint and confirm sample responses match
+### Option A — Import from openapi.json (fastest)
+1. In the API repo, open `openapi.json` — this is the standalone OpenAPI 3.0.3 spec
+   ⚠️ Do NOT upload `rapidapi-listing.json` — that is the full listing doc, not a valid OAS file
+2. Update the `servers[0].url` in `openapi.json` to your live Railway/Render URL
+3. Go to **Endpoints** → **Import** → upload `openapi.json`
+4. Review each imported endpoint and confirm sample responses match
 
 ### Option B — Manual Entry
 For each endpoint:
