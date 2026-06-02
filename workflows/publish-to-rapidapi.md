@@ -7,15 +7,53 @@
 
 ---
 
+## Step 0 — Generate the Listing Document (Required)
+
+**Before touching the RapidAPI dashboard**, produce the listing document.
+Copy `templates/rapidapi-listing.json` to `published/<api-name>.json` and fill in every field:
+
+```bash
+cp templates/rapidapi-listing.json published/my-api-name.json
+```
+
+The document must contain:
+
+| Field | What to fill in |
+|-------|----------------|
+| `name` | Clear, keyword-rich API name (e.g. `"Readability Score API"`) |
+| `short_description` | 1 sentence: what it does + who needs it |
+| `long_description` | 2–4 sentences for the Hub listing |
+| `category` | Most specific RapidAPI category (see template for options) |
+| `account.type` | `"personal"` or `"team"` |
+| `account.username` | RapidAPI username (e.g. `"brocketdesign"`) |
+| `account.team_name` | Team name if `type` is `"team"`, otherwise `null` |
+| `tags` | 5 tags: technology + problem + audience |
+| `base_url` | Live HTTPS URL of the deployed API |
+| `backend_repo` | GitHub repo URL |
+| `hosting_provider` | Railway / Render / Heroku / Vercel |
+| `pricing` | All 4 tiers (see `workflows/pricing-strategy.md`) |
+| `openapi` | Full OpenAPI 3.0 spec **in JSON** (not YAML) — one endpoint per path |
+
+> **Why JSON not YAML?** RapidAPI's import UI accepts both, but the listing document is a
+> single portable file that humans and agents can read, validate, and paste directly into
+> the RapidAPI dashboard without a conversion step.
+
+**Output:** `published/<api-name>.json` committed to this repo. Hand this file to the user.
+
+---
+
 ## Step 1 — Create the Listing
+
+Use the values from your `published/<api-name>.json` listing document:
 
 1. Go to https://rapidapi.com/provider
 2. Click **"Add New API"**
-3. Fill in:
-   - **API Name**: Clear, keyword-rich (e.g., `"Sentiment Analysis API"`)
-   - **Short Description**: 1–2 sentences. Answer: *What does it do? Who needs it?*
-   - **Category**: Pick the **most specific** one (not just "Data")
-   - **Website**: Your GitHub repo URL
+3. Fill in (copy from listing doc):
+   - **API Name** → `name`
+   - **Short Description** → `short_description`
+   - **Category** → `category`
+   - **Account** → personal or the team name from `account`
+   - **Website** → `backend_repo`
 4. Click **"Add API"**
 
 ---
@@ -35,10 +73,12 @@
 
 ## Step 3 — Define Endpoints
 
-### Option A — Import OpenAPI Spec (fastest)
-1. Edit `templates/openapi-spec.yaml` with your real endpoints
-2. Go to **Endpoints** → **Import** → upload the YAML
-3. Review each imported endpoint and add sample responses
+### Option A — Import from listing document (fastest)
+1. Open your `published/<api-name>.json` listing document
+2. Extract the `openapi` field — this is a complete OpenAPI 3.0 JSON spec
+3. Save it as a standalone `.json` file (or paste directly)
+4. Go to **Endpoints** → **Import** → upload the JSON file
+5. Review each imported endpoint and confirm sample responses match
 
 ### Option B — Manual Entry
 For each endpoint:
@@ -58,7 +98,7 @@ For each endpoint:
 
 ## Step 4 — Set Pricing Plans
 
-Follow `workflows/pricing-strategy.md` for the full strategy.
+Use the `pricing` array from your `published/<api-name>.json` listing document.
 
 Quick setup:
 1. Go to **Pricing** tab → **Add Plan**

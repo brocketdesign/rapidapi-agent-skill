@@ -1,0 +1,321 @@
+{
+  "name": "Readability Score API",
+  "short_description": "Instantly score any English text for reading ease, grade level, and complexity — no key or signup required.",
+  "long_description": "The Readability Score API returns four industry-standard metrics for any English text: Flesch Reading Ease (0–100), Flesch–Kincaid Grade Level, Gunning Fog Index, and an estimated reading time. It also provides word, sentence, syllable, and complex-word counts. All computation happens server-side — no external API calls, no rate-limit surprises on the compute side. Ideal for developers building content tools, editors, SEO suites, LMS platforms, and AI writing assistants.",
+
+  "category": "Text Analysis",
+
+  "account": {
+    "type": "personal",
+    "username": "brocketdesign",
+    "team_name": null
+  },
+
+  "tags": ["readability", "text analysis", "NLP", "flesch", "content quality"],
+
+  "base_url": "https://YOUR-APP.up.railway.app",
+  "backend_repo": "https://github.com/brocketdesign/readability-score-api",
+  "hosting_provider": "Railway",
+
+  "pricing": [
+    {
+      "plan": "Basic",
+      "price_usd_per_month": 0,
+      "requests_per_month": 100,
+      "rate_limit_per_minute": 5,
+      "features": ["GET /score", "POST /score", "JSON responses"]
+    },
+    {
+      "plan": "Pro",
+      "price_usd_per_month": 9.99,
+      "requests_per_month": 10000,
+      "rate_limit_per_minute": 60,
+      "features": ["GET /score", "POST /score", "JSON responses", "Email support"],
+      "overage_per_1000_requests": 1.00
+    },
+    {
+      "plan": "Ultra",
+      "price_usd_per_month": 29.99,
+      "requests_per_month": 100000,
+      "rate_limit_per_minute": 300,
+      "features": ["GET /score", "POST /score", "JSON responses", "Priority support"],
+      "overage_per_1000_requests": 0.50
+    },
+    {
+      "plan": "Mega",
+      "price_usd_per_month": 99.99,
+      "requests_per_month": -1,
+      "rate_limit_per_minute": 1000,
+      "features": ["Unlimited requests", "GET /score", "POST /score", "Enterprise support"],
+      "overage_per_1000_requests": null
+    }
+  ],
+
+  "openapi": {
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Readability Score API",
+      "description": "Returns Flesch Reading Ease, Flesch–Kincaid Grade, Gunning Fog index, reading time, and word/sentence/syllable counts for any English text.",
+      "version": "1.0.0",
+      "contact": {
+        "name": "brocketdesign",
+        "url": "https://rapidapi.com/brocketdesign"
+      }
+    },
+    "servers": [
+      {
+        "url": "https://YOUR-APP.up.railway.app",
+        "description": "Production (update after Railway deploy)"
+      }
+    ],
+    "security": [
+      { "RapidAPIKey": [] }
+    ],
+    "paths": {
+      "/health": {
+        "get": {
+          "summary": "Health check",
+          "description": "Returns 200 when the server is running. Not counted against quota.",
+          "operationId": "health",
+          "security": [],
+          "responses": {
+            "200": {
+              "description": "Server is healthy",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": { "type": "string", "example": "ok" },
+                      "version": { "type": "string", "example": "1.0.0" }
+                    }
+                  },
+                  "example": { "status": "ok", "version": "1.0.0" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/score": {
+        "get": {
+          "summary": "Score text (GET)",
+          "description": "Pass any English text as a query parameter and receive readability metrics.",
+          "operationId": "scoreGet",
+          "parameters": [
+            {
+              "name": "text",
+              "in": "query",
+              "required": true,
+              "description": "The English text to analyse. URL-encode special characters. Maximum ~256 KB.",
+              "schema": {
+                "type": "string",
+                "example": "The cat sat on the mat. It was a very fat cat."
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Readability metrics",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/ScoreResponse" },
+                  "example": {
+                    "status": "success",
+                    "data": {
+                      "metrics": {
+                        "flesch_reading_ease": 92.54,
+                        "flesch_kincaid_grade": 1.66,
+                        "gunning_fog": 3.6
+                      },
+                      "interpretation": "Very easy (5th grade)",
+                      "counts": {
+                        "sentences": 2,
+                        "words": 16,
+                        "characters": 44,
+                        "syllables": 18,
+                        "complex_words": 0,
+                        "avg_words_per_sentence": 8,
+                        "avg_syllables_per_word": 1.13
+                      },
+                      "reading_time_seconds": 4.8
+                    },
+                    "cached": false
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request — missing or empty text parameter",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" },
+                  "example": { "status": "error", "message": "The 'text' parameter is required" }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden — invalid or missing RapidAPI proxy secret",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" },
+                  "example": { "status": "error", "message": "Access denied" }
+                }
+              }
+            },
+            "429": {
+              "description": "Rate limit exceeded",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Score text (POST)",
+          "description": "Send a JSON body with a `text` field. Useful for long texts that exceed URL length limits.",
+          "operationId": "scorePost",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["text"],
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "description": "The English text to analyse.",
+                      "example": "The cat sat on the mat. It was a very fat cat."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Readability metrics",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/ScoreResponse" }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request — missing or empty text field",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" },
+                  "example": { "status": "error", "message": "Body field 'text' is required" }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden — invalid or missing RapidAPI proxy secret",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" }
+                }
+              }
+            },
+            "429": {
+              "description": "Rate limit exceeded",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "RapidAPIKey": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-RapidAPI-Key",
+          "description": "Your RapidAPI subscription key. Found in the RapidAPI dashboard under your app."
+        }
+      },
+      "schemas": {
+        "Metrics": {
+          "type": "object",
+          "properties": {
+            "flesch_reading_ease": {
+              "type": "number",
+              "description": "Flesch Reading Ease score (0–100). Higher = easier. 90+ is 5th-grade level; below 30 is college-graduate level.",
+              "example": 92.54
+            },
+            "flesch_kincaid_grade": {
+              "type": "number",
+              "description": "US school grade level required to understand the text. 1 = 1st grade; 12 = high school senior.",
+              "example": 1.66
+            },
+            "gunning_fog": {
+              "type": "number",
+              "description": "Gunning Fog Index. Estimates years of formal education needed. Below 8 = easy; above 17 = difficult.",
+              "example": 3.6
+            }
+          }
+        },
+        "Counts": {
+          "type": "object",
+          "properties": {
+            "sentences": { "type": "integer", "example": 2 },
+            "words": { "type": "integer", "example": 16 },
+            "characters": { "type": "integer", "description": "Non-whitespace characters", "example": 44 },
+            "syllables": { "type": "integer", "example": 18 },
+            "complex_words": { "type": "integer", "description": "Words with 3 or more syllables", "example": 0 },
+            "avg_words_per_sentence": { "type": "number", "example": 8 },
+            "avg_syllables_per_word": { "type": "number", "example": 1.13 }
+          }
+        },
+        "ScoreData": {
+          "type": "object",
+          "properties": {
+            "metrics": { "$ref": "#/components/schemas/Metrics" },
+            "interpretation": {
+              "type": "string",
+              "description": "Human-readable label for the Flesch Reading Ease score",
+              "enum": [
+                "Very easy (5th grade)",
+                "Easy (6th–7th grade)",
+                "Standard (8th–9th grade)",
+                "Fairly difficult (10th–12th grade)",
+                "Difficult (college)",
+                "Very difficult (college graduate)"
+              ],
+              "example": "Very easy (5th grade)"
+            },
+            "counts": { "$ref": "#/components/schemas/Counts" },
+            "reading_time_seconds": {
+              "type": "number",
+              "description": "Estimated reading time in seconds at 200 words per minute",
+              "example": 4.8
+            }
+          }
+        },
+        "ScoreResponse": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string", "example": "success" },
+            "data": { "$ref": "#/components/schemas/ScoreData" },
+            "cached": { "type": "boolean", "description": "true if this result was served from in-memory cache", "example": false }
+          }
+        },
+        "Error": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string", "example": "error" },
+            "message": { "type": "string", "example": "The 'text' parameter is required" }
+          }
+        }
+      }
+    }
+  }
+}

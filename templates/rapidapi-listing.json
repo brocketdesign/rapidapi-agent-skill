@@ -1,0 +1,177 @@
+{
+  "_instructions": "Fill in every field below, then delete this _instructions key. This file is your RapidAPI listing document. Hand it to the user when you finish building the API.",
+
+  "name": "My API Name",
+  "short_description": "One-sentence description of what the API does and who it is for.",
+  "long_description": "2–4 sentence description for the RapidAPI Hub listing. Answer: What problem does it solve? Who needs it? What makes it better than alternatives?",
+
+  "category": "One of: Text Analysis | Finance | Crypto | Location & Geo | Weather | Developer Tools | Health | Entertainment | Social Media | SEO | Travel | Image & Video | Data & Analytics",
+
+  "account": {
+    "type": "personal",
+    "username": "brocketdesign",
+    "team_name": null
+  },
+
+  "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+
+  "base_url": "https://YOUR-APP.up.railway.app",
+  "backend_repo": "https://github.com/brocketdesign/YOUR-REPO",
+  "hosting_provider": "Railway",
+
+  "pricing": [
+    {
+      "plan": "Basic",
+      "price_usd_per_month": 0,
+      "requests_per_month": 100,
+      "rate_limit_per_minute": 5,
+      "features": ["All endpoints", "JSON responses"]
+    },
+    {
+      "plan": "Pro",
+      "price_usd_per_month": 9.99,
+      "requests_per_month": 10000,
+      "rate_limit_per_minute": 60,
+      "features": ["All endpoints", "JSON responses", "Priority support"],
+      "overage_per_1000_requests": 1.00
+    },
+    {
+      "plan": "Ultra",
+      "price_usd_per_month": 29.99,
+      "requests_per_month": 100000,
+      "rate_limit_per_minute": 300,
+      "features": ["All endpoints", "JSON responses", "Priority support"],
+      "overage_per_1000_requests": 0.50
+    },
+    {
+      "plan": "Mega",
+      "price_usd_per_month": 99.99,
+      "requests_per_month": -1,
+      "rate_limit_per_minute": 1000,
+      "features": ["Unlimited requests", "All endpoints", "Enterprise support"],
+      "overage_per_1000_requests": null
+    }
+  ],
+
+  "openapi": {
+    "openapi": "3.0.3",
+    "info": {
+      "title": "My API Name",
+      "description": "Same as long_description above.",
+      "version": "1.0.0",
+      "contact": {
+        "name": "brocketdesign",
+        "url": "https://rapidapi.com/brocketdesign"
+      }
+    },
+    "servers": [
+      {
+        "url": "https://YOUR-APP.up.railway.app",
+        "description": "Production"
+      }
+    ],
+    "security": [
+      { "RapidAPIKey": [] }
+    ],
+    "paths": {
+      "/health": {
+        "get": {
+          "summary": "Health check",
+          "operationId": "health",
+          "responses": {
+            "200": {
+              "description": "Server is healthy",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": { "type": "string", "example": "ok" },
+                      "version": { "type": "string", "example": "1.0.0" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/endpoint": {
+        "get": {
+          "summary": "Main endpoint",
+          "description": "Describe what this endpoint does.",
+          "operationId": "endpoint",
+          "parameters": [
+            {
+              "name": "q",
+              "in": "query",
+              "required": true,
+              "description": "Input query",
+              "schema": { "type": "string", "example": "hello world" }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/SuccessResponse" }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" }
+                }
+              }
+            },
+            "403": {
+              "description": "Forbidden — invalid or missing API key",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" }
+                }
+              }
+            },
+            "429": {
+              "description": "Rate limit exceeded",
+              "content": {
+                "application/json": {
+                  "schema": { "$ref": "#/components/schemas/Error" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "RapidAPIKey": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-RapidAPI-Key"
+        }
+      },
+      "schemas": {
+        "SuccessResponse": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string", "example": "success" },
+            "data": { "type": "object" },
+            "cached": { "type": "boolean", "example": false }
+          }
+        },
+        "Error": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string", "example": "error" },
+            "message": { "type": "string", "example": "The 'q' parameter is required" }
+          }
+        }
+      }
+    }
+  }
+}

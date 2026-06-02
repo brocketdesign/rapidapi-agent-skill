@@ -42,12 +42,19 @@ RapidAPI is the world's largest API marketplace. Developers subscribe to APIs to
 ```
 [ ] Pick an idea → workflows/find-api-ideas.md
 [ ] Build the API → workflows/build-and-deploy.md
+[ ] Run npm run smoke-test → verify all endpoints locally
 [ ] Deploy to free host → workflows/build-and-deploy.md
-[ ] Create listing on RapidAPI → workflows/publish-to-rapidapi.md
-[ ] Set pricing plans → workflows/pricing-strategy.md
+[ ] Generate listing document → copy templates/rapidapi-listing.json to published/<api-name>.json
+[ ] Fill listing document → name, description, category, account, pricing, openapi (JSON)
+[ ] Create listing on RapidAPI → workflows/publish-to-rapidapi.md (use listing doc)
+[ ] Set pricing plans → from listing doc pricing array
 [ ] Test all endpoints in RapidAPI Playground
 [ ] Log in published/README.md
 ```
+
+> **The listing document (`published/<api-name>.json`) is the single source of truth.**
+> It contains everything needed to create the RapidAPI listing without guessing.
+> Always commit it to this repo before touching the RapidAPI dashboard.
 
 ---
 
